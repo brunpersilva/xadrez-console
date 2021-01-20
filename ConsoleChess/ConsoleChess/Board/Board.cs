@@ -4,19 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Board
+namespace board
 {
-    public class Board
-    {
-        public int Rows { get; set; }
-        public int Ranks { get; set; }
+    class Board
+    { 
+        public int Rank { get; set; }
+        public int File { get; set; }
+
         private Piece[,] _pieces;
 
-        public Board(int rows, int ranks)
+        public Board(int file, int rank)
         {
-            Rows = rows;
-            Ranks = ranks;
-            _pieces = new Piece[rows, ranks];
+            File = file;
+            Rank = rank;
+            _pieces = new Piece[file, rank];
+        }
+
+        public Piece piece(int file, int rank)
+        {
+            return _pieces[rank, file];
         }
     }
 }
