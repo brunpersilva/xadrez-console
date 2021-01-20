@@ -20,9 +20,15 @@ namespace board
             _pieces = new Piece[file, rank];
         }
 
-        public Piece piece(int file, int rank)
+        public Piece Piece(int file, int rank)
         {
             return _pieces[rank, file];
+        }
+
+        public void PlacePiece(Piece p, Position pos)
+        {
+            _pieces[pos.Rank, pos.File] = p;
+            p.Position = pos;
         }
     }
 }

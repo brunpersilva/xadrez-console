@@ -13,9 +13,9 @@ namespace board
         public int NumberOfMoves { get; protected set; }
         public Board Board { get; protected set; }
 
-        public Piece(Position position, Color color, int numberOfMoves, Board board)
+        public Piece(Board board, Color color)
         {
-            Position = position;
+            Position = null;
             Color = color;
             Board = board;
             NumberOfMoves = 0;

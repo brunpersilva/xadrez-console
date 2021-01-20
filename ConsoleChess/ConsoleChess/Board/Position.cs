@@ -13,7 +13,9 @@
 
         public override string ToString()
         {
-            return Rank + ", " + File;
+            return Rank 
+                + ", " 
+                + File;
         }
     }
 }
