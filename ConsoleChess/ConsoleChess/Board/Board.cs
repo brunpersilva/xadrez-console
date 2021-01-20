@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace board
 {
     class Board
-    { 
+    {
         public int Rank { get; set; }
         public int File { get; set; }
 
@@ -24,11 +24,42 @@ namespace board
         {
             return _pieces[rank, file];
         }
+        public Piece Piece(Position pos)
+        {
+            return _pieces[pos.Rank, pos.File];
+        }
 
         public void PlacePiece(Piece p, Position pos)
         {
+            if (IsThereAPiece(pos))
+            {
+                throw new BoardExceptions("There is already a piece in this position!"); 
+            }
             _pieces[pos.Rank, pos.File] = p;
             p.Position = pos;
+        }
+
+        public bool IsThereAPiece(Position pos)
+        {
+            ValidatePosition(pos);
+            return Piece(pos) != null;
+        }
+
+        public bool ValidPosition(Position pos)
+        {
+            if (pos.Rank < 0 || pos.Rank >= Rank || pos.File < 0 || pos.File >= File)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void ValidatePosition(Position pos)
+        {
+            if (!ValidPosition(pos))
+            {
+                throw new BoardExceptions("Invalid Position!");
+            }
         }
     }
 }
