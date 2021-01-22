@@ -38,6 +38,17 @@ namespace board
             _pieces[pos.Rank, pos.File] = p;
             p.Position = pos;
         }
+        public Piece RemovePiece(Position pos)
+        {
+            if (Piece(pos) == null)
+            {
+                return null;
+            }
+            Piece aux = Piece(pos);
+            _pieces[pos.File, pos.Rank] = null;
+            return aux;
+
+        }
 
         public bool IsThereAPiece(Position pos)
         {
