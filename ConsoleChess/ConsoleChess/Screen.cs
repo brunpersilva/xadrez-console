@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using board;
+using chess;
 
 namespace ConsoleChess
 {
@@ -45,6 +46,15 @@ namespace ConsoleChess
                 Console.Write(piece);
                 Console.ForegroundColor = aux;
             }
+        }
+
+        public static ChessPosition ReadChessPosition()
+        {
+            string s = Console.ReadLine();
+            char rank = s[0];
+            int file = int.Parse(s[1]+ "");
+            return new ChessPosition(rank, file);
+
         }
     }
 }

@@ -7,12 +7,14 @@ namespace chess
         public Board Board { get; private set; }
         private int _turn;
         private Color _currentPlayer;
+        public bool FinishedGame { get; private set; }
 
         public ChessGame()
         {
             Board = new Board(8, 8);
             _turn = 1;
             _currentPlayer = Color.White;
+            FinishedGame = false;
             PlacePieces();
         }
 

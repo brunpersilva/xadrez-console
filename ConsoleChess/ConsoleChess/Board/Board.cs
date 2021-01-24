@@ -45,7 +45,7 @@ namespace board
                 return null;
             }
             Piece aux = Piece(pos);
-            _pieces[pos.File, pos.Rank] = null;
+            _pieces[pos.Rank, pos.File] = null;
             return aux;
 
         }

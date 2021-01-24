@@ -12,7 +12,18 @@ namespace ConsoleChess
             try
             {
                 ChessGame game = new ChessGame();
+                while (!game.FinishedGame)
+                {
+                    Console.Clear();
+                    Screen.PrintBoard(game.Board);
 
+                    Console.Write("Origen: ");
+                    Position origin = Screen.ReadChessPosition().ToPosition();
+                    Console.Write("Destination: ");
+                    Position destination = Screen.ReadChessPosition().ToPosition();
+
+                    game.ExecuteMovement(origin, destination);
+                }
 
                 Screen.PrintBoard(game.Board);
             }
