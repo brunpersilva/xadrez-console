@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace board
 {
-    class Piece
+    abstract class Piece
     {
-        public Position Position { get; set; }
+        public Position PiecePosition { get; set; }
         public Color Color { get; protected set; }
         public int NumberOfMoves { get; protected set; }
-        public Board Board { get; protected set; }
+        public Board tab { get; protected set; }
 
-        public Piece(Board board, Color color)
+        public Piece(Board chessBoard, Color color)
         {
-            Position = null;
+            PiecePosition = null;
             Color = color;
-            Board = board;
+            tab = chessBoard;
             NumberOfMoves = 0;
         }
         public void IncrementMovement()
@@ -25,5 +25,8 @@ namespace board
             NumberOfMoves++;
         }
 
+        public abstract bool[,] PossibleMoves();
+
+         
     }
 }

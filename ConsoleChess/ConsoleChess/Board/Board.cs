@@ -8,19 +8,19 @@ namespace board
 {
     class Board
     {
-        public int Rank { get; set; }
-        public int File { get; set; }
+        public int Ranks { get; set; }
+        public int Files { get; set; }
 
         private Piece[,] _pieces;
 
-        public Board(int file, int rank)
+        public Board( int ranks, int files)
         {
-            File = file;
-            Rank = rank;
-            _pieces = new Piece[file, rank];
+            Ranks = ranks;
+            Files = files;   
+            _pieces = new Piece[ranks, files];
         }
 
-        public Piece Piece(int file, int rank)
+        public Piece Piece(int rank, int file)
         {
             return _pieces[rank, file];
         }
@@ -28,7 +28,11 @@ namespace board
         {
             return _pieces[pos.Rank, pos.File];
         }
-
+        public bool IsThereAPiece(Position pos)
+        {
+            ValidatePosition(pos);
+            return Piece(pos) != null;
+        }
         public void PlacePiece(Piece p, Position pos)
         {
             if (IsThereAPiece(pos))
@@ -36,7 +40,7 @@ namespace board
                 throw new BoardExceptions("There is already a piece in this position!"); 
             }
             _pieces[pos.Rank, pos.File] = p;
-            p.Position = pos;
+            p.PiecePosition = pos;
         }
         public Piece RemovePiece(Position pos)
         {
@@ -49,22 +53,14 @@ namespace board
             return aux;
 
         }
-
-        public bool IsThereAPiece(Position pos)
-        {
-            ValidatePosition(pos);
-            return Piece(pos) != null;
-        }
-
         public bool ValidPosition(Position pos)
         {
-            if (pos.Rank < 0 || pos.Rank >= Rank || pos.File < 0 || pos.File >= File)
+            if (pos.Rank < 0 || pos.Rank >= Ranks || pos.File < 0 || pos.File >= Files)
             {
                 return false;
             }
             return true;
         }
-
         public void ValidatePosition(Position pos)
         {
             if (!ValidPosition(pos))

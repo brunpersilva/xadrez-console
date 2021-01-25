@@ -37,14 +37,14 @@ namespace chess
             Board.PlacePiece(new Queen(Board, Color.White), new ChessPosition('d', 1).ToPosition());
             Board.PlacePiece(new King(Board, Color.White), new ChessPosition('e', 1).ToPosition());
 
-            Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('a', 2).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('h', 2).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('b', 2).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('g', 2).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('c', 2).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('f', 2).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('d', 2).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('e', 2).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('a', 2).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('h', 2).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('b', 2).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('g', 2).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('c', 2).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('f', 2).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('d', 2).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('e', 2).ToPosition());
 
             Board.PlacePiece(new Rook(Board, Color.Black), new ChessPosition('a', 8).ToPosition());
             Board.PlacePiece(new Rook(Board, Color.Black), new ChessPosition('h', 8).ToPosition());
@@ -55,14 +55,14 @@ namespace chess
             Board.PlacePiece(new Queen(Board, Color.Black), new ChessPosition('d', 8).ToPosition());
             Board.PlacePiece(new King(Board, Color.Black), new ChessPosition('e', 8).ToPosition());
 
-            Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('a', 7).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('h', 7).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('b', 7).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('g', 7).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('c', 7).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('f', 7).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('d', 7).ToPosition());
-            Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('e', 7).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('a', 7).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('h', 7).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('b', 7).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('g', 7).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('c', 7).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('f', 7).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('d', 7).ToPosition());
+            //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('e', 7).ToPosition());
         }
     }
 }
