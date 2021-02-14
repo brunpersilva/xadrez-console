@@ -19,21 +19,21 @@ namespace chess
         }
         private bool CanMove(Position pos)
         {
-            Piece p = tab.Piece(pos);
+            Piece p = Tab.Piece(pos);
             return p == null || p.Color != Color;
         }
         public override bool[,] PossibleMoves()
         {
-            bool[,] mat = new bool[tab.Ranks, tab.Files];
+            bool[,] mat = new bool[Tab.Ranks, Tab.Files];
 
             Position position = new Position(0, 0);
 
             //up
             position.DefineValues(PiecePosition.Rank -1, PiecePosition.File);
-            while (tab.ValidPosition(position) && CanMove(position))
+            while (Tab.ValidPosition(position) && CanMove(position))
             {
                 mat[position.Rank, position.File] = true;
-                if (tab.Piece(position) != null && tab.Piece(position).Color != Color)
+                if (Tab.Piece(position) != null && Tab.Piece(position).Color != Color)
                 {
                     break;
                 }
@@ -42,10 +42,10 @@ namespace chess
 
             //down
             position.DefineValues(PiecePosition.Rank, PiecePosition.File+1);
-            while (tab.ValidPosition(position) && CanMove(position))
+            while (Tab.ValidPosition(position) && CanMove(position))
             {
                 mat[position.Rank, position.File] = true;
-                if (tab.Piece(position) != null && tab.Piece(position).Color != Color)
+                if (Tab.Piece(position) != null && Tab.Piece(position).Color != Color)
                 {
                     break;
                 }
@@ -53,10 +53,10 @@ namespace chess
             }
             //right
             position.DefineValues(PiecePosition.Rank, PiecePosition.File + 1);
-            while (tab.ValidPosition(position) && CanMove(position))
+            while (Tab.ValidPosition(position) && CanMove(position))
             {
                 mat[position.Rank, position.File] = true;
-                if (tab.Piece(position) != null && tab.Piece(position).Color != Color)
+                if (Tab.Piece(position) != null && Tab.Piece(position).Color != Color)
                 {
                     break;
                 }
@@ -65,10 +65,10 @@ namespace chess
 
             //left
             position.DefineValues(PiecePosition.Rank, PiecePosition.File - 1);
-            while (tab.ValidPosition(position) && CanMove(position))
+            while (Tab.ValidPosition(position) && CanMove(position))
             {
                 mat[position.Rank, position.File] = true;
-                if (tab.Piece(position) != null && tab.Piece(position).Color != Color)
+                if (Tab.Piece(position) != null && Tab.Piece(position).Color != Color)
                 {
                     break;
                 }

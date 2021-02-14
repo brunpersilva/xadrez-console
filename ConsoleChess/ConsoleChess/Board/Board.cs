@@ -11,7 +11,7 @@ namespace board
         public int Ranks { get; set; }
         public int Files { get; set; }
 
-        private Piece[,] _pieces;
+        private readonly Piece[,] _pieces;
 
         public Board( int ranks, int files)
         {
