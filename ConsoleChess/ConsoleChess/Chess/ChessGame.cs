@@ -27,6 +27,10 @@ namespace chess
             p.IncrementMovement();
             Piece capturedPiece = Board.RemovePiece(destination);
             Board.PlacePiece(p, destination);
+            if (capturedPiece != null)
+            {
+                _capturedPieces.Add(capturedPiece);
+            }
         }
         public void MakeMovment(Position origin, Position destination)
         {
