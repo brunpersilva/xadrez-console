@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace board
 {
-    class Board
+    public class Board
     {
         public int Ranks { get; set; }
         public int Files { get; set; }

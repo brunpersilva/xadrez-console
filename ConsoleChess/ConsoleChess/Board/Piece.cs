@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace board
 {
-    abstract class Piece
+   public abstract class Piece
     {
         public Position PiecePosition { get; set; }
         public Color Color { get; protected set; }
@@ -23,6 +23,10 @@ namespace board
         public void IncrementMovement()
         {
             NumberOfMoves++;
+        }
+        public void DecrementMovement()
+        {
+            NumberOfMoves--;
         }
         public  bool IsTherePossibleMoves()
         {

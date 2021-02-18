@@ -11,6 +11,7 @@ namespace chess
         public bool FinishedGame { get; private set; }
         private readonly HashSet<Piece> _pieces = new HashSet<Piece>();
         private readonly HashSet<Piece> _capturedPieces = new HashSet<Piece>();
+        public bool Check { get; set; } = false;
 
         public ChessGame()
         {
@@ -18,10 +19,10 @@ namespace chess
             Turn = 1;
             CurrentPlayer = Color.White;
             FinishedGame = false;
-            PlacePieces(); 
+            PlacePieces();
         }
 
-        public void ExecuteMovement(Position origin, Position destination)
+        public Piece ExecuteMovement(Position origin, Position destination)
         {
             Piece p = Board.RemovePiece(origin);
             p.IncrementMovement();
@@ -31,13 +32,41 @@ namespace chess
             {
                 _capturedPieces.Add(capturedPiece);
             }
+            return capturedPiece;
         }
         public void MakeMovment(Position origin, Position destination)
         {
-            ExecuteMovement(origin, destination);
+            Piece capturedPiece = ExecuteMovement(origin, destination);
+
+            if (IsChecked(CurrentPlayer))
+            {
+                UndoMove(origin, destination, capturedPiece);
+                throw new BoardExceptions("You can't put yourself in check");
+            }
+            if (IsChecked(Adversary(CurrentPlayer)))
+            {
+                Check = true;
+            }
+            else
+            {
+                Check = false;
+            }
             Turn++;
             ChangePlayer();
         }
+
+        private void UndoMove(Position origin, Position destination, Piece capturedPiece)
+        {
+            Piece piece = Board.RemovePiece(destination);
+            piece.DecrementMovement();
+            if (capturedPiece != null)
+            {
+                Board.PlacePiece(capturedPiece, destination);
+                _capturedPieces.Remove(capturedPiece);
+            }
+            Board.PlacePiece(piece, origin);
+        }
+
         public void ValidateOriginPosition(Position pos)
         {
             if (Board.Piece(pos) == null)
@@ -83,10 +112,10 @@ namespace chess
             }
             return helper;
         }
-        public HashSet<Piece> PiecesInGame (Color color)
+        public HashSet<Piece> PiecesInGame(Color color)
         {
             HashSet<Piece> helper = new HashSet<Piece>();
-            foreach (Piece piece in _capturedPieces)
+            foreach (Piece piece in _pieces)
             {
                 if (piece.Color == color)
                 {
@@ -95,6 +124,45 @@ namespace chess
             }
             helper.ExceptWith(CapturedPiece(color));
             return helper;
+        }
+        private Color Adversary(Color color)
+        {
+            if (color == Color.White)
+            {
+                return Color.Black;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
+        private Piece King(Color color)
+        {
+            foreach (Piece piece in PiecesInGame(color))
+            {
+                if (piece is King)
+                {
+                    return piece;
+                }
+            }
+            return null;
+        }
+        public bool IsChecked(Color color)
+        {
+            Piece king = King(color);
+            if (king == null)
+            {
+                throw new BoardExceptions($"No {color} king in the game");
+            }
+            foreach (var piece in PiecesInGame(Adversary(color)))
+            {
+                bool[,] mat = piece.PossibleMoves();
+                if (mat[king.PiecePosition.Rank, king.PiecePosition.File])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         public void PlaceNewPiece(char file, int rank, Piece piece)
         {

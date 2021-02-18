@@ -1,6 +1,6 @@
 ﻿namespace board
 {
-    class Position
+    public class Position
     {
         public int Rank { get; set; }
         public int File { get; set; }
