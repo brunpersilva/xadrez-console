@@ -30,12 +30,21 @@ namespace ConsoleChess
             Console.WriteLine();
             PrintCapturedPieces(game);
             Console.WriteLine("Turn: " + game.Turn);
-            Console.WriteLine("Waiting move from: " + game.CurrentPlayer);
-
-            if (game.Check)
+            if (!game.FinishedGame)
             {
-                Console.WriteLine("Check!");  
+                Console.WriteLine("Waiting move from: " + game.CurrentPlayer);
+
+                if (game.Check)
+                {
+                    Console.WriteLine("Check!");
+                }
             }
+            else
+            {
+                Console.WriteLine("Mate!");
+                Console.WriteLine("Winner: " + game.CurrentPlayer);
+            }
+            
         }
 
         private static void PrintCapturedPieces(ChessGame game)

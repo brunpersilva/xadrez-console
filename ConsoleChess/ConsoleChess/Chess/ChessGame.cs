@@ -8,7 +8,7 @@ namespace chess
         public Board Board { get; private set; }
         public int Turn { get; private set; }
         public Color CurrentPlayer { get; private set; }
-        public bool FinishedGame { get; private set; }
+        public bool FinishedGame { get; private set; } = false;
         private readonly HashSet<Piece> _pieces = new HashSet<Piece>();
         private readonly HashSet<Piece> _capturedPieces = new HashSet<Piece>();
         public bool Check { get; set; } = false;
@@ -18,7 +18,6 @@ namespace chess
             Board = new Board(8, 8);
             Turn = 1;
             CurrentPlayer = Color.White;
-            FinishedGame = false;
             PlacePieces();
         }
 
@@ -51,8 +50,16 @@ namespace chess
             {
                 Check = false;
             }
-            Turn++;
-            ChangePlayer();
+            if (IsMated(Adversary(CurrentPlayer)))
+            {
+                FinishedGame = true;
+            }
+            else
+            {
+                Turn++;
+                ChangePlayer();
+            }
+
         }
 
         private void UndoMove(Position origin, Position destination, Piece capturedPiece)
@@ -164,6 +171,37 @@ namespace chess
             }
             return false;
         }
+        public bool IsMated(Color color)
+        {
+            if (!IsChecked(color))
+            {
+                return false;
+            }
+            foreach (Piece piece in PiecesInGame(color))
+            {
+                bool[,] mat = piece.PossibleMoves();
+                for (int i = 0; i < Board.Ranks; i++)
+                {
+                    for (int j = 0; j < Board.Files; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = piece.PiecePosition;
+                            Position destination = new Position(i, j);
+                            Piece capured = ExecuteMovement(origin, destination);
+                            bool TestingCheck = IsChecked(color);
+                            UndoMove(origin, destination, capured);
+                            if (!TestingCheck)
+                            {
+                                return false;
+                            }
+
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         public void PlaceNewPiece(char file, int rank, Piece piece)
         {
             Board.PlacePiece(piece, new ChessPosition(file, rank).ToPosition());
@@ -173,11 +211,11 @@ namespace chess
         {
             PlaceNewPiece('a', 1, new Rook(Board, Color.White));
             PlaceNewPiece('h', 1, new Rook(Board, Color.White));
-            PlaceNewPiece('b', 1, new Knight(Board, Color.White));
-            PlaceNewPiece('g', 1, new Knight(Board, Color.White));
-            PlaceNewPiece('c', 1, new Bishop(Board, Color.White));
-            PlaceNewPiece('f', 1, new Bishop(Board, Color.White));
-            PlaceNewPiece('d', 1, new Queen(Board, Color.White));
+            //PlaceNewPiece('b', 1, new Knight(Board, Color.White));
+            //PlaceNewPiece('g', 1, new Knight(Board, Color.White));
+            //PlaceNewPiece('c', 1, new Bishop(Board, Color.White));
+            //PlaceNewPiece('f', 1, new Bishop(Board, Color.White));
+            //PlaceNewPiece('d', 1, new Queen(Board, Color.White));
             PlaceNewPiece('e', 1, new King(Board, Color.White));
 
             //Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('a', 2).ToPosition());
@@ -191,11 +229,11 @@ namespace chess
 
             PlaceNewPiece('a', 8, new Rook(Board, Color.Black));
             PlaceNewPiece('h', 8, new Rook(Board, Color.Black));
-            PlaceNewPiece('b', 8, new Knight(Board, Color.Black));
-            PlaceNewPiece('g', 8, new Knight(Board, Color.Black));
-            PlaceNewPiece('c', 8, new Bishop(Board, Color.Black));
-            PlaceNewPiece('f', 8, new Bishop(Board, Color.Black));
-            PlaceNewPiece('d', 8, new Queen(Board, Color.Black));
+            //PlaceNewPiece('b', 8, new Knight(Board, Color.Black));
+            //PlaceNewPiece('g', 8, new Knight(Board, Color.Black));
+            //PlaceNewPiece('c', 8, new Bishop(Board, Color.Black));
+            //PlaceNewPiece('f', 8, new Bishop(Board, Color.Black));
+            //PlaceNewPiece('d', 8, new Queen(Board, Color.Black));
             PlaceNewPiece('e', 8, new King(Board, Color.Black));
 
             //Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('a', 7).ToPosition());
