@@ -43,7 +43,7 @@ namespace board
             }
             return false;
         }   
-        public bool CanMove(Position pos)
+        public bool PossibleMoves(Position pos)
         {
             return PossibleMoves()[pos.Rank, pos.File];
         }
