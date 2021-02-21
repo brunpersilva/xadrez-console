@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 namespace chess
 {
-    class ChessGame
+    public class ChessGame
     {
         public Board Board { get; private set; }
         public int Turn { get; private set; }
@@ -31,6 +31,27 @@ namespace chess
             {
                 _capturedPieces.Add(capturedPiece);
             }
+
+            // Special Move King side castle
+            if (p is King && destination.File == origin.File + 2)
+            {
+                Position rookOrigin = new Position(origin.Rank, origin.File + 3);
+                Position rookDestination = new Position(origin.Rank, origin.File + 1);
+                Piece R = Board.RemovePiece(rookOrigin);
+                R.IncrementMovement();
+                Board.PlacePiece(R, rookDestination);
+            }
+
+            // Special Move Queen side castle
+            if (p is King && destination.File == origin.File - 2)
+            {
+                Position rookOrigin = new Position(origin.Rank, origin.File - 4);
+                Position rookDestination = new Position(origin.Rank, origin.File - 1);
+                Piece R = Board.RemovePiece(rookOrigin);
+                R.IncrementMovement();
+                Board.PlacePiece(R, rookDestination);
+            }
+
             return capturedPiece;
         }
         public void MakeMovment(Position origin, Position destination)
@@ -64,14 +85,36 @@ namespace chess
 
         private void UndoMove(Position origin, Position destination, Piece capturedPiece)
         {
-            Piece piece = Board.RemovePiece(destination);
-            piece.DecrementMovement();
+            Piece p = Board.RemovePiece(destination);
+            p.DecrementMovement();
             if (capturedPiece != null)
             {
                 Board.PlacePiece(capturedPiece, destination);
                 _capturedPieces.Remove(capturedPiece);
             }
-            Board.PlacePiece(piece, origin);
+           
+
+            // Special Move King side castle
+            if (p is King && destination.File == origin.File + 2)
+            {
+                Position rookOrigin = new Position(origin.Rank, origin.File + 3);
+                Position rookDestination = new Position(origin.Rank, origin.File + 1);
+                Piece R = Board.RemovePiece(rookDestination);
+                R.DecrementMovement();
+                Board.PlacePiece(R, rookOrigin);
+            }
+
+            // Special Move Queen side castle
+            if (p is King && destination.File == origin.File - 2)
+            {
+                Position rookOrigin = new Position(origin.Rank, origin.File - 4);
+                Position rookDestination = new Position(origin.Rank, origin.File - 1);
+                Piece R = Board.RemovePiece(rookDestination);
+                R.IncrementMovement();
+                Board.PlacePiece(R, rookOrigin);
+            }
+
+            Board.PlacePiece(p, origin);
         }
 
         public void ValidateOriginPosition(Position pos)
@@ -216,7 +259,7 @@ namespace chess
             PlaceNewPiece('c', 1, new Bishop(Board, Color.White));
             PlaceNewPiece('f', 1, new Bishop(Board, Color.White));
             PlaceNewPiece('d', 1, new Queen(Board, Color.White));
-            PlaceNewPiece('e', 1, new King(Board, Color.White));
+            PlaceNewPiece('e', 1, new King(Board, Color.White, this));
 
             Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('a', 2).ToPosition());
             Board.PlacePiece(new Pawn(Board, Color.White), new ChessPosition('h', 2).ToPosition());
@@ -234,7 +277,7 @@ namespace chess
             PlaceNewPiece('c', 8, new Bishop(Board, Color.Black));
             PlaceNewPiece('f', 8, new Bishop(Board, Color.Black));
             PlaceNewPiece('d', 8, new Queen(Board, Color.Black));
-            PlaceNewPiece('e', 8, new King(Board, Color.Black));
+            PlaceNewPiece('e', 8, new King(Board, Color.Black, this));
 
             Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('a', 7).ToPosition());
             Board.PlacePiece(new Pawn(Board, Color.Black), new ChessPosition('h', 7).ToPosition());
