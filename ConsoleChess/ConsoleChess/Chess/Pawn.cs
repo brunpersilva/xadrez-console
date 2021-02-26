@@ -9,9 +9,10 @@ namespace chess
 {
     class Pawn : Piece
     {
-        public Pawn(Board board, Color color) : base(board, color)
+        private readonly ChessGame _game;
+        public Pawn(ChessGame game, Board board, Color color) : base(board, color)
         {
-
+            _game = game;
         }
         private bool IsthereAdversary(Position pos)
         {
@@ -27,52 +28,85 @@ namespace chess
         {
             bool[,] mat = new bool[Tab.Ranks, Tab.Files];
 
-            Position position = new Position(0, 0);
+            Position pos = new Position(0, 0);
 
             if (Color == Color.White)
             {
-                position.DefineValues(position.Rank - 1, position.File);
-                if (Tab.ValidPosition(position) && Free(position))
+                pos.DefineValues(PiecePosition.Rank - 1, PiecePosition.File);
+                if (Tab.ValidPosition(pos) && Free(pos))
                 {
-                    mat[position.Rank, position.File] = true;
+                    mat[pos.Rank, pos.File] = true;
                 }
-                position.DefineValues(position.Rank - 2, position.File);
-                if (Tab.ValidPosition(position) && Free(position) && NumberOfMoves == 0)
+                pos.DefineValues(PiecePosition.Rank - 2, PiecePosition.File);
+                Position p2 = new Position(PiecePosition.Rank - 1, PiecePosition.File);
+                if (Tab.ValidPosition(p2) && Free(p2) && Tab.ValidPosition(pos) && Free(pos) && NumberOfMoves == 0)
                 {
-                    mat[position.Rank, position.File] = true;
+                    mat[pos.Rank, pos.File] = true;
                 }
-                position.DefineValues(position.Rank - 1, position.File - 1);
-                if (Tab.ValidPosition(position) && Free(position))
+                pos.DefineValues(PiecePosition.Rank - 1, PiecePosition.File - 1);
+                if (Tab.ValidPosition(pos) && IsthereAdversary(pos))
                 {
-                    mat[position.Rank, position.File] = true;
+                    mat[pos.Rank, pos.File] = true;
                 }
-                position.DefineValues(position.Rank - 1, position.File + 1);
-                if (Tab.ValidPosition(position) && Free(position))
+                pos.DefineValues(PiecePosition.Rank - 1, PiecePosition.File + 1);
+                if (Tab.ValidPosition(pos) && IsthereAdversary(pos))
                 {
-                    mat[position.Rank, position.File] = true;
+                    mat[pos.Rank, pos.File] = true;
+                }
+                //en Passant
+                if (PiecePosition.Rank == 3)
+                {
+                    Position left = new Position(PiecePosition.Rank, PiecePosition.File - 1);
+                    if (Tab.ValidPosition(left) && IsthereAdversary(left) && Tab.Piece(left) == _game.VulnerableEnpassant)
+                    {
+                        mat[left.Rank - 1, left.File] = true;
+                    }
+                    Position right = new Position(PiecePosition.Rank, PiecePosition.File - 1);
+                    if (Tab.ValidPosition(right) && IsthereAdversary(right) && Tab.Piece(right) == _game.VulnerableEnpassant)
+                    {
+                        mat[right.Rank - 1, right.File] = true;
+                    }
                 }
             }
+
+
             else
             {
-                position.DefineValues(position.Rank + 1, position.File);
-                if (Tab.ValidPosition(position) && Free(position))
+                pos.DefineValues(PiecePosition.Rank + 1, PiecePosition.File);
+                if (Tab.ValidPosition(pos) && Free(pos))
                 {
-                    mat[position.Rank, position.File] = true;
+                    mat[pos.Rank, pos.File] = true;
                 }
-                position.DefineValues(position.Rank + 2, position.File);
-                if (Tab.ValidPosition(position) && Free(position) && NumberOfMoves == 0)
+                pos.DefineValues(PiecePosition.Rank + 2, PiecePosition.File);
+                Position p2 = new Position(PiecePosition.Rank + 1, PiecePosition.File);
+                if (Tab.ValidPosition(p2) && Free(p2) && Tab.ValidPosition(pos) && Free(pos) && NumberOfMoves == 0)
                 {
-                    mat[position.Rank, position.File] = true;
+                    mat[pos.Rank, pos.File] = true;
                 }
-                position.DefineValues(position.Rank + 1, position.File - 1);
-                if (Tab.ValidPosition(position) && Free(position))
+                pos.DefineValues(PiecePosition.Rank + 1, PiecePosition.File - 1);
+                if (Tab.ValidPosition(pos) && IsthereAdversary(pos))
                 {
-                    mat[position.Rank, position.File] = true;
+                    mat[pos.Rank, pos.File] = true;
                 }
-                position.DefineValues(position.Rank + 1, position.File + 1);
-                if (Tab.ValidPosition(position) && Free(position))
+                pos.DefineValues(PiecePosition.Rank + 1, PiecePosition.File + 1);
+                if (Tab.ValidPosition(pos) && IsthereAdversary(pos))
                 {
-                    mat[position.Rank, position.File] = true;
+                    mat[pos.Rank, pos.File] = true;
+                }
+
+                //en Passant
+                if (PiecePosition.Rank == 4)
+                {
+                    Position left = new Position(PiecePosition.Rank, PiecePosition.File - 1);
+                    if (Tab.ValidPosition(left) && IsthereAdversary(left) && Tab.Piece(left) == _game.VulnerableEnpassant)
+                    {
+                        mat[left.Rank + 1, left.File] = true;
+                    }
+                    Position right = new Position(PiecePosition.Rank, PiecePosition.File - 1);
+                    if (Tab.ValidPosition(right) && IsthereAdversary(right) && Tab.Piece(right) == _game.VulnerableEnpassant)
+                    {
+                        mat[right.Rank + 1, right.File] = true;
+                    }
                 }
             }
             return mat;

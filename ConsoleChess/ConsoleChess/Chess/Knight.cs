@@ -23,47 +23,47 @@ namespace chess
         {
             bool[,] mat = new bool[Tab.Ranks, Tab.Files];
 
-            Position position = new Position(0, 0);
+            Position pos = new Position(0, 0);
 
-            position.DefineValues(PiecePosition.Rank - 1, PiecePosition.File-2);
-            if (Tab.ValidPosition(position) && CanMove(position))
+            pos.DefineValues(PiecePosition.Rank - 1, PiecePosition.File - 2);
+            if (Tab.ValidPosition(pos) && CanMove(pos))
             {
-                mat[position.Rank, position.File] = true;
+                mat[pos.Rank, pos.File] = true;
             }
-            position.DefineValues(PiecePosition.Rank - 2, PiecePosition.File - 1);
-            if (Tab.ValidPosition(position) && CanMove(position))
+            pos.DefineValues(PiecePosition.Rank - 2, PiecePosition.File - 1);
+            if (Tab.ValidPosition(pos) && CanMove(pos))
             {
-                mat[position.Rank, position.File] = true;
+                mat[pos.Rank, pos.File] = true;
             }
-            position.DefineValues(PiecePosition.Rank - 2, PiecePosition.File +1);
-            if (Tab.ValidPosition(position) && CanMove(position))
+            pos.DefineValues(PiecePosition.Rank - 2, PiecePosition.File + 1);
+            if (Tab.ValidPosition(pos) && CanMove(pos))
             {
-                mat[position.Rank, position.File] = true;
+                mat[pos.Rank, pos.File] = true;
             }
-            position.DefineValues(PiecePosition.Rank - 1, PiecePosition.File + 2);
-            if (Tab.ValidPosition(position) && CanMove(position))
+            pos.DefineValues(PiecePosition.Rank - 1, PiecePosition.File + 2);
+            if (Tab.ValidPosition(pos) && CanMove(pos))
             {
-                mat[position.Rank, position.File] = true;
+                mat[pos.Rank, pos.File] = true;
             }
-            position.DefineValues(PiecePosition.Rank + 1, PiecePosition.File + 2);
-            if (Tab.ValidPosition(position) && CanMove(position))
+            pos.DefineValues(PiecePosition.Rank + 1, PiecePosition.File + 2);
+            if (Tab.ValidPosition(pos) && CanMove(pos))
             {
-                mat[position.Rank, position.File] = true;
+                mat[pos.Rank, pos.File] = true;
             }
-            position.DefineValues(PiecePosition.Rank +2, PiecePosition.File +1);
-            if (Tab.ValidPosition(position) && CanMove(position))
+            pos.DefineValues(PiecePosition.Rank + 2, PiecePosition.File + 1);
+            if (Tab.ValidPosition(pos) && CanMove(pos))
             {
-                mat[position.Rank, position.File] = true;
+                mat[pos.Rank, pos.File] = true;
             }
-            position.DefineValues(PiecePosition.Rank +2, PiecePosition.File -1);
-            if (Tab.ValidPosition(position) && CanMove(position))
+            pos.DefineValues(PiecePosition.Rank + 2, PiecePosition.File - 1);
+            if (Tab.ValidPosition(pos) && CanMove(pos))
             {
-                mat[position.Rank, position.File] = true;
+                mat[pos.Rank, pos.File] = true;
             }
-            position.DefineValues(PiecePosition.Rank + 1, PiecePosition.File - 2);
-            if (Tab.ValidPosition(position) && CanMove(position))
+            pos.DefineValues(PiecePosition.Rank + 1, PiecePosition.File - 2);
+            if (Tab.ValidPosition(pos) && CanMove(pos))
             {
-                mat[position.Rank, position.File] = true;
+                mat[pos.Rank, pos.File] = true;
             }
             return mat;
         }
