@@ -83,6 +83,21 @@ namespace chess
                 UndoMove(origin, destination, capturedPiece);
                 throw new BoardExceptions("You can't put yourself in check");
             }
+            Piece p = Board.Piece(destination);
+
+            //Promotion
+            if (p is Pawn)
+            {
+                if ((p.Color == Color.White && destination.Rank ==0) || (p.Color == Color.Black && destination.Rank == 7))
+                {
+                    p = Board.RemovePiece(destination);
+                    _pieces.Remove(p);
+                    Piece queen = new Queen(Board, p.Color);
+                    Board.PlacePiece(queen, destination);
+                    _pieces.Add(queen);
+                }
+            }
+
             if (IsChecked(Adversary(CurrentPlayer)))
             {
                 Check = true;
@@ -100,7 +115,7 @@ namespace chess
                 Turn++;
                 ChangePlayer();
             }
-            Piece p = Board.Piece(destination);
+            
             // En passant
             if (p is Pawn && (destination.Rank == origin.Rank -2 || destination.Rank == origin.Rank +2))
             {
